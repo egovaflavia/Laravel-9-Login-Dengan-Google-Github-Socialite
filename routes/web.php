@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialiteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    dd('<h1>Welcome Home</h1>');
+})->middleware(['auth'])->name('dashboard');
+
+/**
+ * Socialite Auth
+ */
+Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
+Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProvideCallback']);
+
+require __DIR__ . '/auth.php';
